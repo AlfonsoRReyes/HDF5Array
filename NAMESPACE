@@ -1,0 +1,106 @@
+import(methods)
+importFrom(stats, setNames)
+import(BiocGenerics)
+import(S4Vectors)
+import(IRanges)
+import(rhdf5)
+
+
+### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+### Export S4 classes
+###
+
+exportClasses(
+    DelayedArray, DelayedMatrix,
+    HDF5Dataset,
+    HDF5Array, HDF5Matrix
+)
+
+
+### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+### Export S3 methods
+###
+
+S3method(as.array, DelayedArray)
+
+S3method(as.matrix, DelayedArray)
+
+S3method(as.vector, DelayedArray)
+
+S3method(mean, DelayedArray)
+
+### We also export them thru the export() directive so that (a) they can be
+### called directly, (b) tab-completion on the name of the generic shows them,
+### and (c) methods() doesn't asterisk them.
+
+export(
+    as.array.DelayedArray,
+
+    as.matrix.DelayedArray,
+
+    as.vector.DelayedArray,
+
+    mean.DelayedArray
+)
+
+
+### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+### Export S4 methods for generics not defined in HDF5Array
+###
+
+exportMethods(
+    ## Methods for generics defined in the base package:
+    length, names, "names<-",
+    dim, "dim<-", dimnames, "dimnames<-",
+    as.array, as.vector, as.matrix,
+    "[", "[[",
+    drop,
+    t,
+    c,
+    is.na, "!",
+    #"+", "-", "*", "/", "^", "%%", "%/%",  # "Arith" group generic
+    "==", "!=", "<=", ">=", "<", ">",       # "Compare" group generic
+    anyNA,
+    max, min, range, sum, prod, any, all,   # "Summary" group generic
+    mean,
+    round, signif,
+    rowSums, colSums, rowMeans, colMeans,
+
+    ## Methods for generics defined in the methods package:
+    coerce, show,
+
+    ## Methods for generics defined in the BiocGenerics package:
+    cbind, rbind,
+
+    ## Methods for generics defined in the S4Vectors package:
+    isEmpty
+)
+
+
+### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+### Export non-generic functions
+###
+
+export(
+    setHDF5DumpFile, getHDF5DumpFile, lsHDF5DumpFile,
+    setHDF5DumpName, getHDF5DumpName,
+    DelayedArray,
+    HDF5Dataset, HDF5Array
+)
+
+
+### - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+### Export S4 generics defined in HDF5Array + export corresponding methods
+###
+
+export(
+    pmax2, pmin2,
+    apply
+)
+
+### Exactly the same list as above.
+exportMethods(
+    pmax2, pmin2,
+    apply
+)
+
